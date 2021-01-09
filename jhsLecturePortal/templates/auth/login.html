@@ -1,0 +1,76 @@
+{% extends 'base.html' %} {% block title %}Login{% endblock %} {% block content %}
+<section class="section coming-soon" style="padding:222px 0px" data-section="section3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-xs-12">
+                <div class="continer centerIt">
+                    <div>
+                        <h4><em>Login</em> and complete unfinished classes</h4>
+                        <div></div>
+                        <h4 style='font-size: 130px;'><em>NOW!</em></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="right-content">
+                    <div class="top-content">
+                        <h6>Login to get access to the <em>Online Classes Materials</em></h6>
+                    </div>
+                    <form id="login" action="" method="post">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    {% if form.email.errors %} {{form.email(class="form-control is-invalid input",
+                                    placeholder="Enter Email")}}
+                                    <div class="invalid-feedback">
+                                        {%for error in form.email.errors%}
+                                        <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
+                                    </div>
+                                    {% else %} {{form.email(class="form-control", placeholder="Enter Email")}} {% endif
+                                    %}
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <fieldset>
+                                    {% if form.password.errors %} {{form.password(class="form-control is-invalid input",
+                                    placeholder="Enter Password")}}
+                                    <div class="invalid-feedback">
+                                        {%for error in form.password.errors%}
+                                        <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
+                                    </div>
+                                    {% else %} {{form.password(class="form-control", placeholder="Enter Password")}} {%
+                                    endif %}
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <div class="form-check">
+                                        <div class="row" style="margin-top: -15px;">
+                                            <div class="col-md-6 text-md-left text-sm-centre">
+                                                {{ form.remember.label(class="form-check-label custom-text", style="padding:4px 0px;") }}
+                                                {{ form.remember(class="form-check-input", style="width: 15px; margin: -3px 10px;") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <br>
+                                <fieldset>
+                                    {{form.submit(style="background-color: #f5a425; font-weight:bold; width:35%;")}}
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="border-top pt-3">
+                            <small style="color:white;">
+                                Don't have Account? <a class="ml-2" href="{{ url_for('auth.signup') }}"> Sign Up </a>
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Subjects{% endblock %}
+{% block content%}
+<section class="section courses" style="background-image: url({{url_for('static', filename='images/main-slider-03.jpg')}});" data-section="section4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2>Select The Subject</h2>
+                </div>
+            </div>
+            <div class="owl-carousel owl-theme">
+                {% for subject in data %}
+                <div class="item">
+                    <img src="{{url_for('static' ,filename='images/subject-covers/'+subject.cover_pic)}}" alt="{{subject.name}}">
+                    <a href="{{url_for('main.subject_lectures', id=subject.id)}}">
+                        <div class="down-content">
+                            <h4>{{subject.name}}</h4>
+                            <p>{{subject.description}}</p>
+                            <p><a href="{{url_for('main.subject_resources', id=subject.id)}}"></a></p>
+                            <div class="author-image">
+                                <img src="{{url_for('static' ,filename='images/teacher-pics/'+subject.teacher_pic)}}" alt="{{subject.teacher_name}}">
+                            </div>
+                            <div class="text-button-free" style="font-weight: bold;">{{subject.teacher_name}}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

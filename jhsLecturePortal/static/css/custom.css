@@ -1,0 +1,18 @@
+.custom-text {
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+.custom-tabs li a {
+    font-weight: bold;
+    color: white;
+}
+
+.custom-list li a {
+    color: #495057;
+    font-weight: bold;
+}
+
+.custom-list li a:hover {
+    color: #f5a425;
+}

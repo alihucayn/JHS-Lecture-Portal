@@ -1,0 +1,118 @@
+{% extends 'base.html' %} {% block title %}SignUp{% endblock %} {% block content %}
+<section class="section coming-soon" style="padding:132px 0px" data-section="section3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-xs-12">
+                <div class="continer centerIt">
+                    <div>
+                        <h4><em>SignUp</em> and take all online Classes' content of Jinnah Highs For Free</h4>
+                        <div></div>
+                        <h4 style='font-size: 130px;'><em>NOW!</em></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="right-content">
+                    <div class="top-content">
+                        <h6>Register your free account and get access to <em>Online Classes Materials</em></h6>
+                    </div>
+                    <form id="signup" action="" method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    {% if form.name.errors %} {{form.name(class="form-control is-invalid input", placeholder="Enter Full Name")}}
+                                    <div class="invalid-feedback">
+                                        {%for error in form.name.errors%}
+                                        <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
+                                    </div>
+                                    {% else %} {{form.name(class="form-control", placeholder="Enter Full Name")}} {% endif %}
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <fieldset>
+                                    {% if form.email.errors %} {{form.email(class="form-control is-invalid input", placeholder="Enter Email")}}
+                                    <div class="invalid-feedback">
+                                        {%for error in form.email.errors%}
+                                        <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
+                                    </div>
+                                    {% else %} {{form.email(class="form-control", placeholder="Enter Email")}} {% endif %}
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <fieldset>
+                                    {% if form.password.errors %} {{form.password(class="form-control is-invalid input", placeholder="Enter Password")}}
+                                    <div class="invalid-feedback">
+                                        {%for error in form.password.errors%}
+                                        <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
+                                    </div>
+                                    {% else %} {{form.password(class="form-control", placeholder="Enter Password")}} {% endif %}
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <fieldset>
+                                    {% if form.confirm_password.errors %} {{form.confirm_password(class="form-control is-invalid input", placeholder="Confirm Password")}}
+                                    <div class="invalid-feedback">
+                                        {%for error in form.confirm_password.errors%}
+                                        <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
+                                    </div>
+                                    {% else %} {{form.confirm_password(class="form-control", placeholder="Confirm Password")}} {% endif %}
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="col-md-3 text-md-left">
+                                            {{form.campus.label(style="font-weight:bold; color:white;")}}
+                                        </div>
+                                        <div class="col-md-7">
+                                            {{form.campus(class="form-control form-control-sm")}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <br>
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="col-md-3 text-md-left">
+                                            {{form.grade.label(style="font-weight:bold; color:white;")}}
+                                        </div>
+                                        <div class="col-md-7">
+                                            {{form.grade(class="form-control form-control-sm")}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <br>
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="col-md-3 text-md-left">
+                                            {{form.section.label(style="font-weight:bold; color:white;")}}
+                                        </div>
+                                        <div class="col-md-7">
+                                            {{form.section(class="form-control form-control-sm")}}
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <br>
+                                <fieldset>
+                                    {{form.submit(style="background-color: #f5a425; font-weight:bold; width:35%;")}}
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="border-top pt-3">
+                            <small style="color:white;">
+                                Already Have An Account? <a class="ml-2" href="{{ url_for('auth.login') }}">Log In</a>
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

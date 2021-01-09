@@ -1,0 +1,83 @@
+{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content %}
+<!-- ***** Main Banner Area Start ***** -->
+<section class="section main-banner" id="top" data-section="section1">
+    <video autoplay muted loop id="bg-video">
+        <source src="{{url_for('static' ,filename='images/course-video.mp4')}}" type="video/mp4" />
+    </video>
+    <div class="video-overlay header-text">
+        <div class="caption">
+            <h6>Ali Hussain and Taha Ali of Jinnah Highs</h6>
+            <h2><em>Online Classes</em> Archives</h2>
+            <div class="main-button">
+                <div class=""><a href="{{url_for('main.subjects')}}">Get Started</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ***** Main Banner Area End ***** -->
+
+
+<section class="features">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                <div class="features-post">
+                    <div class="features-content">
+                        <div class="content-show">
+                            <h4><i class="fa fa-book"></i>Lectures</h4>
+                        </div>
+                        <div class="content-hide">
+                            <p>Get almost all the lectures of Jinnah Highs Online Classes conducted during Second Lockdown. Go to Subject page and get access to lectures.</p>
+                            {% if current_user.is_authenticated %}
+                            <div><a href="{{url_for('main.subjects')}}">Go to Lectures</a></div>
+                            {% else %}
+                            <div><a href="{{url_for('auth.signup')}}">SignUp</a></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-lg-4 col-12"></div> -->
+            <div class="col-lg-4 col-12">
+                <div class="features-post second-features">
+                    <div class="features-content">
+                        <div class="content-show">
+                            <h4><i class="fa fa-file"></i>Notes</h4>
+                        </div>
+                        <div class="content-hide">
+                            <p>Get excess to all the notes of lectures conducted in Online Classes during second Lockdown, all compiled at one place. </p>
+                            {% if current_user.is_authenticated %}
+                            <div><a href="{{url_for('main.subjects')}}">Go to Notes</a></div>
+                            {% else %}
+                            <div><a href="{{url_for('auth.signup')}}">SignUp</a></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="features-post third-features">
+                    {% if current_user.is_authenticated %}
+                    <div class="features-content">
+                        <div class="content-show">
+                            <h4><i class="fa fa-user"></i>Account</h4>
+                        </div>
+                        <div class="content-hide">
+                            <div><a href="{{url_for('auth.account')}}">Account</a></div>
+                            {% else %}
+                            <div class="features-content">
+                                <div class="content-show">
+                                    <h4><i class="fa fa-file"></i>Signup</h4>
+                                </div>
+                                <div class="content-hide">
+                                    <p>Signup or Log In to get excess to all the materials.</p>
+                                    <div><a href="{{url_for('auth.signup')}}">SignUp</a></div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>
+{% endblock %}

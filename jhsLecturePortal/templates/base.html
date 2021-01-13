@@ -9,8 +9,9 @@
     <meta name="author" content="Ali Hussain and Taha Ali">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900"
         rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.svg') }}">
 
-    <title>{% block title %}{% endblock %} | Qura Time</title>
+    <title>{% block title %}{% endblock %} | {{site_name}}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{url_for('static' ,filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -34,7 +35,10 @@
 
 <body>
     <header class="main-header clearfix" role="header">
-        <div class="logo"><a href="{{url_for('main.home')}}"><em>Qura</em>&nbspTime</a></div>
+        <div class="logo"><a href="{{url_for('main.home')}}"><img
+                    src="{{ url_for('static', filename='images/favicon.svg') }}" alt="Logo"
+                    width="65px">&nbsp<em>Qura</em>&nbspTime</a>
+        </div>
         <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
         <nav id="menu" class="main-nav" role="navigation">
             <ul class="main-menu">
@@ -70,14 +74,19 @@
             <div class="row">
                 <div class="col-md-12">
                     <p>
-                        <i class="fa fa-copyright"></i> Copyright {{now.year}} by Qura Time | Creators:
+                        <i class="fa fa-copyright"></i> Copyright {{now.year}} by {{site_name}} | <a
+                            href="https://www.instagram.com/qura.time/" target="_blank">
+                            <i class="fa fa-instagram"></i>&nbsp@qura.time</a><br>
+                        Creators:
                         <a href="https://www.instagram.com/its_ali.h14/" target="_blank">
                             <i class="fa fa-instagram"></i>&nbsp@its_ali.h14</a>&nbsp;
                         <a href="https://www.instagram.com/mineblox_arts/" target="_blank"><i
                                 class="fa fa-instagram"></i>&nbsp@mineblox_arts</a>
+                        {% if not current_user.is_authenticated %}
                         <br>
                         <small>Disclaimer: Your Account would need admin approval as Materials are only excessible to
                             students of Jinnah Highs for now.</small>
+                        {% endif %}
                     </p>
                 </div>
             </div>

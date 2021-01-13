@@ -1,5 +1,5 @@
 import os
-from flask import Flask, send_from_directory, url_for, abort
+from flask import Flask, send_from_directory, url_for, abort, Markup
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_required, current_user
 from flask_bcrypt import Bcrypt
@@ -33,6 +33,7 @@ def create_app(test_config=None):
         MAIL_USERNAME = 'alifed2005@gmail.com',
         MAIL_PASSWORD = 'geqmlpbrjotljids',
         INSTAGRAM_PROFILE='https://google.com',
+        MAINTENANCE=False,
     )
 
     if test_config is None:
@@ -51,7 +52,8 @@ def create_app(test_config=None):
 
     @app.context_processor
     def define():
-        return {'now': datetime.utcnow()}
+        return {'now': datetime.utcnow(),
+                'site_name': app.config['SITE_NAME'],}
 
     @login_required
     @app.route('/data/<path:file>')
@@ -60,6 +62,11 @@ def create_app(test_config=None):
             if current_user.approved and current_user.verified:
                 return send_from_directory(app.config['DATA_FOLDER'], file)
         return abort(403)
+
+    @app.before_request
+    def check_for_maintenance():
+        if app.config['MAINTENANCE']:
+            return Markup('<h1 style="padding: 0% 25%;">Sorry, But we are off due Maintenance Activities.</h1>'), 503
 
 
     from .database import init_db

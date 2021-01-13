@@ -138,7 +138,7 @@ def reset_token(token):
 
 @bp.route('/verify_email/<token>')
 def verify_email(token):
-    if current_user.verified:
+    if current_user.is_authenticated and current_user.verified:
         return redirect(url_for('main.home'))
     user = User.verify_token(token)
     if user is None:
@@ -147,12 +147,21 @@ def verify_email(token):
 
     user.verified=True
     db.session.commit()
-    flash('Your email has now been verified! You would now be able to access Site material', 'success')
-    return redirect(url_for('main.subjects'))
+    flash('Your email has now been verified!', 'success')
+    if current_user.is_authenticated:
+        if current_user.approved:
+            return redirect(url_for('main.subjects'))
+        else:
+            flash('Your approval request is being approved and after approval you may access material', 'info')
+            return redirect(url_for('main.home'))
+    return redirect(url_for('auth.login', next=url_for('main.subjects')))
 
 @login_required
 @bp.route('/verify_email')
 def verify_email_again():
-    send_verification_email(current_user)
-    flash('You may verify your email by clicking on link sent to the email address provided.', 'info')
+    if not current_user.verified:
+        send_verification_email(current_user)
+        flash('You may verify your email by clicking on link sent to the email address provided.', 'info')
+        return redirect(url_for('auth.account'))
+    flash('You are already verified.', 'warning')
     return redirect(url_for('auth.account'))

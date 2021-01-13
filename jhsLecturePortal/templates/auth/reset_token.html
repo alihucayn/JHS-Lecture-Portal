@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% block title %}SignUp{% endblock %} {% block content %}
+<section class="section coming-soon" style="padding:132px 0px" data-section="section3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-xs-12">
+                <div class="continer centerIt">
+                    <div>
+                        <h4><em>SignUp</em> and take all online Classes' content of Jinnah Highs For Free</h4>
+                        <div></div>
+                        <h4 style='font-size: 130px;'><em>NOW!</em></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="right-content">
+                    <div class="top-content">
+                        <h6>Register your free account and get access to <em>Online Classes Materials</em></h6>
+                    </div>
+                    <form id="signup" action="" method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="col-md-12">
+                            <fieldset>
+                                {% if form.password.errors %} {{form.password(class="form-control is-invalid input",
+                                placeholder="Enter Password")}}
+                                <div class="invalid-feedback">
+                                    {%for error in form.password.errors%}
+                                    <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
+                                </div>
+                                {% else %} {{form.password(class="form-control", placeholder="Enter Password")}} {%
+                                endif %}
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <fieldset>
+                                {% if form.confirm_password.errors %} {{form.confirm_password(class="form-control
+                                is-invalid input", placeholder="Confirm Password")}}
+                                <div class="invalid-feedback">
+                                    {%for error in form.confirm_password.errors%}
+                                    <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
+                                </div>
+                                {% else %} {{form.confirm_password(class="form-control", placeholder="Confirm
+                                Password")}} {% endif %}
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <br>
+                            <fieldset>
+                                {{form.submit(style="background-color: #f5a425; font-weight:bold; width:35%;")}}
+                            </fieldset>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock %}

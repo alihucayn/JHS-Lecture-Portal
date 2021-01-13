@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900"
         rel="stylesheet">
 
-    <title>{% block title %}{% endblock %} | AT-Archives</title>
+    <title>{% block title %}{% endblock %} | Qura Time</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{url_for('static' ,filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -34,7 +34,7 @@
 
 <body>
     <header class="main-header clearfix" role="header">
-        <div class="logo"><a href="{{url_for('main.home')}}"><em>AT</em>&nbspArchives</a></div>
+        <div class="logo"><a href="{{url_for('main.home')}}"><em>Qura</em>&nbspTime</a></div>
         <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
         <nav id="menu" class="main-nav" role="navigation">
             <ul class="main-menu">
@@ -43,6 +43,9 @@
                 {% if current_user.is_authenticated %}
                 <li><a href="{{url_for('auth.account')}}" class="external">My Account</a></li>
                 <li><a href="{{url_for('main.about')}}" class="external">About Us</a></li>
+                {% if current_user.role != 'STUDENT' %}
+                <li><a href="{{url_for('admin.index')}}" class="external">Admin Dashboard</a></li>
+                {% endif %}
                 <li><a href="{{url_for('auth.logout')}}" class="external">Logout</a></li>
                 {% else %}
                 <li><a href="{{url_for('main.about')}}" class="external">About Us</a></li>
@@ -52,28 +55,29 @@
             </ul>
         </nav>
     </header>
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in
-    messages %}
-    <div class="alert alert-{{ category }}"
-        style="font-weight: bold; font-weight: bold; position: absolute; top: 15%; left: 10%; z-index: 10;">
-        {{ message }}
+    <div style="font-weight: bold; font-weight: bold; position: absolute; top: 15%; left: 10%; z-index: 10;">
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in
+        messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %} {% endif %} {% endwith %}
     </div>
-    {% endfor %} {% endif %} {% endwith %} {% block content%}{% endblock %}
+    {% block content%}{% endblock %}
 
     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <p>
-                        <i class="fa fa-copyright"></i> Copyright {{now.year}} by Ali & Taha Archives | Creators:
+                        <i class="fa fa-copyright"></i> Copyright {{now.year}} by Qura Time | Creators:
                         <a href="https://www.instagram.com/its_ali.h14/" target="_blank">
                             <i class="fa fa-instagram"></i>&nbsp@its_ali.h14</a>&nbsp;
                         <a href="https://www.instagram.com/mineblox_arts/" target="_blank"><i
                                 class="fa fa-instagram"></i>&nbsp@mineblox_arts</a>
-                        {% if current_user.is_authenticated %}
                         <br>
-                        <small>Disclaimer: Your Account would need admin approval as Materials are only excessible to students of Jinnah Highs for now.</small>
-                        {% endif %}
+                        <small>Disclaimer: Your Account would need admin approval as Materials are only excessible to
+                            students of Jinnah Highs for now.</small>
                     </p>
                 </div>
             </div>
@@ -91,6 +95,11 @@
     <script src="{{url_for('static' ,filename='js/video.js')}}"></script>
     <script src="{{url_for('static' ,filename='js/slick-slider.js')}}"></script>
     <script src="{{url_for('static' ,filename='js/custom.js')}}"></script>
+    <script>
+        function redirect(destination) {
+            window.location.href = "{{url_for('auth.verify_email_again')}}"
+        }
+    </script>
     <script>
         //according to loftblog tut
         $('.nav li:first').addClass('active');

@@ -27,7 +27,8 @@
                             <h4><i class="fa fa-book"></i>Lectures</h4>
                         </div>
                         <div class="content-hide">
-                            <p>Get almost all the lectures of Jinnah Highs Online Classes conducted during Second Lockdown. Go to Subject page and get access to lectures.</p>
+                            <p>Get almost all the lectures of Jinnah Highs Online Classes conducted during Second
+                                Lockdown. Go to Subject page and get access to lectures.</p>
                             {% if current_user.is_authenticated %}
                             <div><a href="{{url_for('main.subjects')}}">Go to Lectures</a></div>
                             {% else %}
@@ -45,7 +46,8 @@
                             <h4><i class="fa fa-file"></i>Notes</h4>
                         </div>
                         <div class="content-hide">
-                            <p>Get excess to all the notes of lectures conducted in Online Classes during second Lockdown, all compiled at one place. </p>
+                            <p>Get excess to all the notes of lectures conducted in Online Classes during second
+                                Lockdown, all compiled at one place. </p>
                             {% if current_user.is_authenticated %}
                             <div><a href="{{url_for('main.subjects')}}">Go to Notes</a></div>
                             {% else %}

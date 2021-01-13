@@ -48,8 +48,10 @@
                                     <div class="form-check">
                                         <div class="row" style="margin-top: -15px;">
                                             <div class="col-md-6 text-md-left text-sm-centre">
-                                                {{ form.remember.label(class="form-check-label custom-text", style="padding:4px 0px;") }}
-                                                {{ form.remember(class="form-check-input", style="width: 15px; margin: -3px 10px;") }}
+                                                {{ form.remember.label(class="form-check-label custom-text",
+                                                style="padding:4px 0px;") }}
+                                                {{ form.remember(class="form-check-input", style="width: 15px; margin:
+                                                -3px 10px;") }}
                                             </div>
                                         </div>
                                     </div>
@@ -65,6 +67,12 @@
                         <div class="border-top pt-3">
                             <small style="color:white;">
                                 Don't have Account? <a class="ml-2" href="{{ url_for('auth.signup') }}"> Sign Up </a>
+                            </small>
+                            <br>
+                            <small style="color:white;">
+                                Forgot Password? <a class="ml-2" href="{{ url_for('auth.reset_request') }}"> Reset
+                                    Password
+                                </a>
                             </small>
                         </div>
                     </form>

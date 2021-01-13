@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% block title %}Password Reset{% endblock %} {% block content %}
+<section class="section coming-soon" style="padding:222px 0px" data-section="section3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="centre-content">
+                    <div class="top-content">
+                        <h6>Password Reset Request Form</h6>
+                    </div>
+                    <form action="" method="post">
+                        {{ form.hidden_tag() }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <fieldset>
+                                    {% if form.email.errors %} {{form.email(class="form-control is-invalid input",
+                                    placeholder="Enter Email")}}
+                                    <div class="invalid-feedback">
+                                        {%for error in form.email.errors%}
+                                        <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
+                                    </div>
+                                    {% else %} {{form.email(class="form-control", placeholder="Enter Email")}} {% endif
+                                    %}
+                                </fieldset>
+                            </div>
+                            <div class="col-md-12">
+                                <br>
+                                <fieldset>
+                                    {{form.submit(style="background-color: #f5a425; font-weight:bold; width:70%;")}}
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="border-top pt-3">
+                            <small style="color:white;">
+                                Go to<a class="ml-2" href="{{ url_for('auth.login') }}">Login</a> Page
+                            </small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

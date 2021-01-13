@@ -1,5 +1,9 @@
 import string
 import random
+import os
+from . import mail
+from flask_mail import Message
+from flask import current_app, url_for
 
 # gnerating list of choices
 # def generateChoicesList(of, model, campus=None, grade=None):
@@ -37,5 +41,28 @@ def username_generator(form):
     return form.name.data.replace(" ", "-").lower()+"-"+form.grade.data.lower()
 
 
-def private_id_generator(length=12):
+def token_generator(length=12):
     return ''.join( random.choice(string.ascii_letters) for i in range(length) )
+
+
+def filename_generator(obj, file_data):
+    ext=os.path.splitext(file_data.filename)[1]
+    name=token_generator(10)
+    
+    return name+ext
+
+def send_reset_email(user):
+    token = user.get_token()
+    msg = Message('Password Reset',
+                  sender=(current_app.config['SITE_NAME'], current_app.config["MAIL_USERNAME"]),
+                  recipients=[user.email])
+    msg.body = f'''To reset your password, visit the following link: {url_for('auth.reset_token', token=token, _external=True)}\nIf you did not make this request then simply ignore this email and no changes will be made. '''
+    mail.send(msg)
+
+def send_verification_email(user):
+    token = user.get_token()
+    msg = Message('Email Verification',
+                  sender=(current_app.config['SITE_NAME'], current_app.config["MAIL_USERNAME"]),
+                  recipients=[user.email])
+    msg.body = f'''To verify your email, visit the following link: {url_for('auth.verify_email', token=token, _external=True)}'''
+    mail.send(msg)

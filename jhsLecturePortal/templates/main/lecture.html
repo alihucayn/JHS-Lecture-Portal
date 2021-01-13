@@ -6,21 +6,32 @@
             <div class="col-md-12">
                 <a href="{{url_for('main.subject_lectures', id=data.subject.id)}}">
                     <div class="section-heading">
-                        <h2 style="margin-top:8px">{% block title %}{{data.subject.name}}&nbsp;Lecture{% endblock %}</h2>
+                        <h2 style="margin-top:8px">{% block title %}{{data.subject.name}}&nbsp;Lecture{% endblock %}
+                        </h2>
                     </div>
                 </a>
             </div>
         </div>
-        {%if data.frmt=="video" %}
+        {%if data.frmt=="VIDEO" %}
         <div class="embed-responsive embed-responsive-16by9 mx-auto w-75">
             <iframe class="embed-responsive-item"
                 src="https://www.youtube.com/embed/{{data.src}}?modestbranding=1&rel=0&iv_load_policy=3&fs=0"
                 width="426" height="240" frameborder="0"></iframe>
         </div>
-        {% else %}
-        <!-- Markup for audio -->
-        {% endif %}
+        {% elif data.frmt=="AUDIO" and data.resources.filter_by(type='NOTES').first() %}
+        <div class="embed-responsive embed-responsive-16by9 mx-auto w-75">
+            <iframe type="application/pdf"
+                src="{{url_for('data', file='pdfs/'+data.resources.filter_by(type='NOTES').first().src)}}#toolbar=0"
+                frameborder="0">Your Browser isnt able to display the PDF Preview. You may click the name of resource
+                below in resources section and download the PDF</iframe>
+        </div>
         <br>
+        <!-- Markup for audio -->
+        <audio style="position: relative; left:35%;" controls autoplay>
+            <source src="{{url_for('data', file='audios/'+data.audio_src)}}" type="audio/mp3">
+        </audio>
+        <br>
+        {% endif %}
         {% if data.resources %}
         <div class="row">
             <div class="col-md-12">
@@ -28,7 +39,8 @@
                 <ul class="list-group">
                     {% for resource in data.resources%}
                     <li class="list-group-item">
-                        <a href="{{resource.content}}" target="_blank">{{resource.name}}&nbsp;{{resource.type}}</a>
+                        <a href="{{url_for('data', file='pdfs/'+resource.src)}}" target="_blank"
+                            download="{{resource.name}}">{{resource.name}}&nbsp;{{resource.type}}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -36,8 +48,6 @@
         </div>
         {% endif %}
     </div>
-    </div>
-    <div class="container">
     </div>
 </section>
 {% endblock %}

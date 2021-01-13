@@ -8,11 +8,13 @@
                 </div>
             </div>
         </div>
-        <img src="{{url_for('static', filename='subject-covers'+subject.cover_pic)}}" class="img-fluid" alt="Responsive image">
+        <img src="{{url_for('static', filename='images/cover-pics/'+subject.cover_pic)}}" class="img-fluid"
+            alt="Responsive image">
         <div class="row">
             <div class="col-md-auto">
                 <br>
-                <img src="{{url_for('static', filename='teacher-pics/'+subject.teacher_pic)}}" alt="" class="rounded-circle" width="200">
+                <img src="{{url_for('static', filename='images/teacher-pics/'+subject.teacher_pic)}}" alt=""
+                    class="rounded-circle" width="200">
             </div>
 
             <div class="col-md-auto py-5">
@@ -27,7 +29,7 @@
                 <h1 class="custom-text">Lectures</h1>
                 <br>
                 <ul class="list-group custom-list">
-                    {% for lecture in lectures.items %} {% if lecture.src %}
+                    {% for lecture in lectures.items %} {% if lecture.src or lecture.audio_src %}
                     <li class="list-group-item">
                         <a
                             href="{{url_for('main.lecture', id=lecture.priv_id)}}">{{lecture.name}}&nbsp;({{lecture.date}})</a>
@@ -39,22 +41,25 @@
                 </ul>
                 <br>
             </div>
-            <h5 class="custom-text">Resources for Lectures are available at <a href="{{url_for('main.subject_resources', id=subject.id)}}"><em>this Page</em></a></h5>
+            <h5 class="custom-text">Resources for Lectures are available at <a
+                    href="{{url_for('main.subject_resources', id=subject.id)}}"><em>this Page</em></a></h5>
         </div>
         <br>
         <div class="row">
             <span class="custom-text">Pages</span>
             <div class="col-md-12">
                 {% for page_num in lectures.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-                    {% if page_num %}
-                        {% if lectures.page == page_num %}
-                            <a class="btn btn-warning mb-4" href="{{ url_for('main.subject_lectures', id=subject.id , page=page_num) }}">{{ page_num }}</a>
-                        {% else %}
-                        <a class="btn btn-outline-warning mb-4" href="{{ url_for('main.subject_lectures', id=subject.id , page=page_num) }}">{{ page_num }}</a>
-                        {% endif %}
-                    {% else %}
-                        ...
-                    {% endif %}
+                {% if page_num %}
+                {% if lectures.page == page_num %}
+                <a class="btn btn-warning mb-4"
+                    href="{{ url_for('main.subject_lectures', id=subject.id , page=page_num) }}">{{ page_num }}</a>
+                {% else %}
+                <a class="btn btn-outline-warning mb-4"
+                    href="{{ url_for('main.subject_lectures', id=subject.id , page=page_num) }}">{{ page_num }}</a>
+                {% endif %}
+                {% else %}
+                ...
+                {% endif %}
                 {% endfor %}
             </div>
         </div>

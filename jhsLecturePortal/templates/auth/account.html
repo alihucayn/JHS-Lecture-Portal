@@ -1,4 +1,4 @@
-{% extends 'base.html' %}  {% block content%}
+{% extends 'base.html' %} {% block content%}
 <section class="section courses" data-section="section4">
     <div class="container-fluid">
         <div class="row">
@@ -21,16 +21,16 @@
                             <div class="col-md-5">
                                 <div class="form-group">
                                     {{ form.name.label(class="form-control-label custom-text") }}
-                
+
                                     {% if form.name.errors %}
-                                        {{ form.name(class="form-control form-control-lg is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.name.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
+                                    {{ form.name(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.name.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
                                     {% else %}
-                                        {{ form.name(class="form-control form-control-lg") }}
+                                    {{ form.name(class="form-control form-control-lg") }}
                                     {% endif %}
                                 </div>
                             </div>
@@ -38,17 +38,23 @@
                                 <div class="form-group">
                                     {{ form.email.label(class="form-control-label custom-text") }}
                                     {% if form.email.errors %}
-                                        {{ form.email(class="form-control form-control-lg is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.email.errors %}
-                                                <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
+                                    {{ form.email(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
                                     {% else %}
-                                        {{ form.email(class="form-control form-control-lg") }}
+                                    {{ form.email(class="form-control form-control-lg") }}
                                     {% endif %}
                                 </div>
                             </div>
+                            {% if not current_user.verified %}
+                            <div class="form-group">
+                                <button id="verify" class="btn btn-warning align-middle" style="margin: 35px 20px;"
+                                    type="button" onclick="redirect()">Verify</button>
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="row">
                             <div class="col-md-3">
@@ -71,12 +77,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <p style="color:white;"><strong style="font-size: 20px;">Note:</strong>&nbsp;<em>If you change your Class data your account would have to be again approved by Admin. You would immediatly be logged out.</em></p>
+                                <p style="color:white;"><strong style="font-size: 20px;">Note:</strong>&nbsp;<em>If you
+                                        change your Class data your account would have to be again approved by Admin.
+                                        You wouldn't be able to access the contents of site.</em></p>
                             </div>
                         </div>
                     </fieldset>
                     <div class="form-group">
-                        {{ form.submit(class="btn btn-outline-info") }}
+                        {{ form.submit(class="btn btn-warning") }}
                     </div>
                 </form>
             </div>

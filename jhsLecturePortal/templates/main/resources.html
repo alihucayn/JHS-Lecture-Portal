@@ -8,10 +8,12 @@
                 </div>
             </div>
         </div>
-        <img src="{{url_for('static', filename='subject-covers'+subject.cover_pic)}}" class="img-fluid" alt="Responsive image">
+        <img src="{{url_for('static', filename='images/cover-pics/'+subject.cover_pic)}}" class="img-fluid"
+            alt="Responsive image">
         <div class="row">
             <div class="col-md-auto">
-                <img src="{{url_for('static', filename='teacher-pics/'+subject.teacher_pic)}}" alt="" class="rounded-circle" width="200">
+                <img src="{{url_for('static', filename='images/teacher-pics/'+subject.teacher_pic)}}" alt=""
+                    class="rounded-circle" width="200">
             </div>
 
             <div class="col-md-auto py-5">
@@ -26,35 +28,38 @@
                 <br>
                 <ul class="list-group custom-list">
                     {% for resource in resources.items %}
-                        {% if resource.content %}
-                            <li class="list-group-item">
-                                <a class="" href="{{resource.content}}"
-                                    target="_blank">{{resource.name}}&nbsp;({{resource.date}})</a>
-                            </li>
-                        {% else %}
-                            <li class="list-group-item disabled" style="color: #dc3545a1; font-weight: bold;">
-                                {{resource.name}}&nbsp;({{resource.date}})</li>
-                        {% endif %}
+                    {% if resource.src %}
+                    <li class="list-group-item">
+                        <a class="" href="{{url_for('data', file='pdfs/'+resource.src)}}" target="_blank"
+                            download="{{resource.name}}">{{resource.name}}&nbsp;({{resource.date}})</a>
+                    </li>
+                    {% else %}
+                    <li class="list-group-item disabled" style="color: #dc3545a1; font-weight: bold;">
+                        {{resource.name}}&nbsp;({{resource.date}})</li>
+                    {% endif %}
                     {% endfor %}
                 </ul>
                 <br>
             </div>
-            <h5 class="custom-text">Lecture of these resources are available at <a href="{{url_for('main.subject_lectures', id=subject.id)}}"><em>this Page</em></a></h5>
+            <h5 class="custom-text">Lecture of these resources are available at <a
+                    href="{{url_for('main.subject_lectures', id=subject.id)}}"><em>this Page</em></a></h5>
         </div>
         <br>
         <div class="row">
             <span class="custom-text">Pages</span>
             <div class="col-md-12">
                 {% for page_num in resources.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-                    {% if page_num %}
-                        {% if resources.page == page_num %}
-                            <a class="btn btn-warning mb-4" href="{{ url_for('main.subject_resources', id=subject.id , page=page_num) }}">{{ page_num }}</a>
-                        {% else %}
-                        <a class="btn btn-outline-warning mb-4" href="{{ url_for('main.subject_resources', id=subject.id , page=page_num) }}">{{ page_num }}</a>
-                        {% endif %}
-                    {% else %}
-                        ...
-                    {% endif %}
+                {% if page_num %}
+                {% if resources.page == page_num %}
+                <a class="btn btn-warning mb-4"
+                    href="{{ url_for('main.subject_resources', id=subject.id , page=page_num) }}">{{ page_num }}</a>
+                {% else %}
+                <a class="btn btn-outline-warning mb-4"
+                    href="{{ url_for('main.subject_resources', id=subject.id , page=page_num) }}">{{ page_num }}</a>
+                {% endif %}
+                {% else %}
+                ...
+                {% endif %}
                 {% endfor %}
             </div>
         </div>

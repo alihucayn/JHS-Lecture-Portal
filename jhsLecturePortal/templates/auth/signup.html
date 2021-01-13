@@ -21,42 +21,50 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <fieldset>
-                                    {% if form.name.errors %} {{form.name(class="form-control is-invalid input", placeholder="Enter Full Name")}}
+                                    {% if form.name.errors %} {{form.name(class="form-control is-invalid input",
+                                    placeholder="Enter Full Name")}}
                                     <div class="invalid-feedback">
                                         {%for error in form.name.errors%}
                                         <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
                                     </div>
-                                    {% else %} {{form.name(class="form-control", placeholder="Enter Full Name")}} {% endif %}
+                                    {% else %} {{form.name(class="form-control", placeholder="Enter Full Name")}} {%
+                                    endif %}
                                 </fieldset>
                             </div>
                             <div class="col-md-12">
                                 <fieldset>
-                                    {% if form.email.errors %} {{form.email(class="form-control is-invalid input", placeholder="Enter Email")}}
+                                    {% if form.email.errors %} {{form.email(class="form-control is-invalid input",
+                                    placeholder="Enter Email")}}
                                     <div class="invalid-feedback">
                                         {%for error in form.email.errors%}
                                         <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
                                     </div>
-                                    {% else %} {{form.email(class="form-control", placeholder="Enter Email")}} {% endif %}
+                                    {% else %} {{form.email(class="form-control", placeholder="Enter Email")}} {% endif
+                                    %}
                                 </fieldset>
                             </div>
                             <div class="col-md-12">
                                 <fieldset>
-                                    {% if form.password.errors %} {{form.password(class="form-control is-invalid input", placeholder="Enter Password")}}
+                                    {% if form.password.errors %} {{form.password(class="form-control is-invalid input",
+                                    placeholder="Enter Password")}}
                                     <div class="invalid-feedback">
                                         {%for error in form.password.errors%}
                                         <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
                                     </div>
-                                    {% else %} {{form.password(class="form-control", placeholder="Enter Password")}} {% endif %}
+                                    {% else %} {{form.password(class="form-control", placeholder="Enter Password")}} {%
+                                    endif %}
                                 </fieldset>
                             </div>
                             <div class="col-md-12">
                                 <fieldset>
-                                    {% if form.confirm_password.errors %} {{form.confirm_password(class="form-control is-invalid input", placeholder="Confirm Password")}}
+                                    {% if form.confirm_password.errors %} {{form.confirm_password(class="form-control
+                                    is-invalid input", placeholder="Confirm Password")}}
                                     <div class="invalid-feedback">
                                         {%for error in form.confirm_password.errors%}
                                         <span style="font-weight: bold;">{{ error }}</span> {% endfor %}
                                     </div>
-                                    {% else %} {{form.confirm_password(class="form-control", placeholder="Confirm Password")}} {% endif %}
+                                    {% else %} {{form.confirm_password(class="form-control", placeholder="Confirm
+                                    Password")}} {% endif %}
                                 </fieldset>
                             </div>
                             <div class="col-md-12">

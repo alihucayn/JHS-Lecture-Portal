@@ -22,7 +22,6 @@ def create_app(test_config=None):
     
     app.config.from_mapping(
         SECRET_KEY='dev',
-        SQLALCHEMY_DATABASE_URI=f'sqlite:///{os.path.join(app.instance_path, "dev.db")}',
         FLASK_ADMIN_SWATCH='litera',
         MAIL_SERVER = 'smtp.googlemail.com',
         MAIL_PORT = 587,
@@ -35,7 +34,7 @@ def create_app(test_config=None):
     )
 
     if test_config is None:
-        app.config.from_pyfile('D:\Coding\JHS-Lecture-Portal\instance\config.py', silent=True)
+        app.config.from_pyfile(os.environ.get('CONFIG'), silent=True)
     else:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
         app.config.from_mapping(test_config)
 

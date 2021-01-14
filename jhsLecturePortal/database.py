@@ -118,33 +118,33 @@ class Subject(db.Model):
         clases=[clas.grade+'-'+clas.campus for clas in self.clases]
         return f"{self.name} - {clases}"
 
-base_path=os.path.join(os.path.dirname(os.path.abspath(__file__)),'static\\data')
+static_path=os.environ.get('STATIC_FOLDER')
 
 @listens_for(Subject, 'after_delete')
 def del_image(mapper, connection, target):
     if target.cover_pic:
         # Delete image
         try:
-            os.remove(os.path.join(base_path, 'cover-pics', target.cover_pic))
+            os.remove(os.path.join(static_path, 'images/cover-pics', target.cover_pic))
         except OSError:
             pass
 
         # Delete thumbnail
         try:
-            os.remove(os.path.join(base_path, 'cover-pics', form.thumbgen_filename(target.cover_pic)))
+            os.remove(os.path.join(static_path, 'images/cover-pics', form.thumbgen_filename(target.cover_pic)))
         except OSError:
             pass
     
     if target.teacher_pic:
         # Delete image
         try:
-            os.remove(os.path.join(base_path, 'teacher-pics', target.teacher_pic))
+            os.remove(os.path.join(static_path, 'images/teacher-pics', target.teacher_pic))
         except OSError:
             pass
 
         # Delete thumbnail
         try:
-            os.remove(os.path.join(base_path, 'teacher-pics', form.thumbgen_filename(target.teacher_pic)))
+            os.remove(os.path.join(static_path, 'images/teacher-pics', form.thumbgen_filename(target.teacher_pic)))
         except OSError:
             pass
 

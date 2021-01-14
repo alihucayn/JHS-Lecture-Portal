@@ -11,6 +11,7 @@ from sqlalchemy import and_
 from .database import User
 from flask_login import current_user
 from flask import redirect, request, url_for, flash
+static_path=os.environ.get('STATIC_FOLDER')
 data_path=os.environ.get('DATA_FOLDER')
 
 class Authentication(ModelView):
@@ -86,8 +87,8 @@ class SubjectView(Authentication):
         rules.FieldSet(('order', 'name', 'description', 'teacher_name', 'cover_pic', 'teacher_pic', 'clases'), 'Add Subject'),
     ]
     form_extra_fields = {
-        'teacher_pic': ImageUploadField('Teacher Pic', base_path=os.path.join(data_path, 'teacher-pics'), namegen=filename_generator, thumbnail_size=(200, 200, True), max_size=(512, 512, True), url_relative_path='files/teacher-pics/'),
-        'cover_pic': ImageUploadField('Cover Pic', base_path=os.path.join(data_path, 'cover-pics'), namegen=filename_generator, thumbnail_size=(200, 133, True), max_size=(516, 344, True), url_relative_path='files/cover-pics/'),
+        'teacher_pic': ImageUploadField('Teacher Pic', base_path=os.path.join(static_path, 'images/teacher-pics'), namegen=filename_generator, thumbnail_size=(200, 200, True), max_size=(512, 512, True), url_relative_path='files/images/teacher-pics/'),
+        'cover_pic': ImageUploadField('Cover Pic', base_path=os.path.join(static_path, 'images/cover-pics'), namegen=filename_generator, thumbnail_size=(200, 133, True), max_size=(516, 344, True), url_relative_path='files/images/cover-pics/'),
     }
     form_choices={
         'order':[(i,str(i)) for i in range(1, 11)]

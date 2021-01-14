@@ -31,7 +31,7 @@ def generateChoicesList(of, model, empty_insert=True):
     for entry in model.query:
         value=getattr(entry, of)
         if (value, value) not in list:
-            list.append((value, value))
+            list.append((value, value.capitalize()))
     if empty_insert:
         list.insert(0,("",of.capitalize()))
     return list

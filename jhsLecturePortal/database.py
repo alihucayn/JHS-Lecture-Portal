@@ -26,7 +26,7 @@ class Class(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     campus=db.Column(db.String(15), nullable=False)
     grade=db.Column(db.String(5), nullable=False)
-    section=db.Column(db.String(1), nullable=False)
+    section=db.Column(db.String(10), nullable=False)
     clas_incharge=db.Column(db.String(46))
     students=db.relationship("User", backref=db.backref("clas", lazy=True), lazy="dynamic")
     subjects=db.relationship("Subject", secondary=sbjcts, lazy=True, backref=db.backref("clases", lazy=True))

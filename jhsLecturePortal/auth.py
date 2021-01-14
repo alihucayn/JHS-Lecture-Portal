@@ -147,7 +147,7 @@ def verify_email(token):
 
     user.verified=True
     db.session.commit()
-    flash('Your email has now been verified!', 'success')
+    flash('Your email has now been verified! You may Login and access material', 'success')
     if current_user.is_authenticated:
         if current_user.approved:
             return redirect(url_for('main.subjects'))

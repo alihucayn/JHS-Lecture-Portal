@@ -62,7 +62,7 @@ def subject_lectures(id):
             flash("Account hasn't been approved yet. Check again in some time.", "info")
             return redirect(url_for("main.home"))
         elif not current_user.approved:
-            flash(f"Your Account approval Request has been rejected. Contact site admins at instagram handle of {current_app.config['INSTAGRAM_PROFILE']}", "danger")
+            flash(f"Your Account approval Request has been rejected. Contact site admins at instagram handle", "danger")
             return redirect(url_for('main.home'))
     else:
         flash("You didnt verify your email. Click on Verify, Go to your email account and verify your email.", "warning")
@@ -85,7 +85,7 @@ def subject_resources(id):
                 flash("Account hasn't been approved yet. Check again in some time.", "info")
                 return redirect(url_for("main.home"))
         elif not current_user.approved:
-            flash(f"Your Account approval Request has been rejected. Contact site admins at instagram handle of {current_app.config['INSTAGRAM_PROFILE']}", "danger")
+            flash(f"Your Account approval Request has been rejected. Contact site admins at instagram handle", "danger")
             return redirect(url_for('main.home'))
     else:
         flash("You didnt verify your email. Click on Verify, Go to your email account and verify your email.", "warning")

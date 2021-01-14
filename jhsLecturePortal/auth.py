@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request
+from flask import Blueprint, render_template, flash, redirect, url_for, request, abort
 from .utils import generateChoicesList, username_generator, send_reset_email, send_verification_email
 from .forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from .database import Class, User
@@ -159,9 +159,11 @@ def verify_email(token):
 @login_required
 @bp.route('/verify_email')
 def verify_email_again():
-    if not current_user.verified:
-        send_verification_email(current_user)
-        flash('You may verify your email by clicking on link sent to the email address provided.', 'info')
+    if current_user.is_authenticated:
+        if not current_user.verified:
+            send_verification_email(current_user, first_time=False)
+            flash('You may verify your email by clicking on link sent to the email address provided.', 'info')
+            return redirect(url_for('auth.account'))
+        flash('You are already verified.', 'warning')
         return redirect(url_for('auth.account'))
-    flash('You are already verified.', 'warning')
-    return redirect(url_for('auth.account'))
+    abort(403)

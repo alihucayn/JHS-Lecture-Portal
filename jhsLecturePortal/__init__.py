@@ -12,35 +12,42 @@ from datetime import datetime
 db=SQLAlchemy()
 login_manager=LoginManager()
 bcrypt=Bcrypt()
-data_path=os.path.join(os.path.dirname(__file__), 'data')
 mail=Mail()
 from .administration import HomeView
 admin=Admin(name='Admin Dashboard', template_mode='bootstrap4', index_view=HomeView())
 
 
 def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True, static_url_path='/files')
+    app = Flask(__name__, instance_relative_config=True, static_url_path='/files', template_folder=os.environ.get('TEMPLATE_FOLDER'), static_folder=os.environ.get('STATIC_FOLDER'))
     
     app.config.from_mapping(
         SECRET_KEY='dev',
         SQLALCHEMY_DATABASE_URI=f'sqlite:///{os.path.join(app.instance_path, "dev.db")}',
         FLASK_ADMIN_SWATCH='litera',
-        DATA_FOLDER='D:\Coding\JHS-Lecture-Portal\jhsLecturePortal\data',
         MAIL_SERVER = 'smtp.googlemail.com',
         MAIL_PORT = 587,
         MAIL_USE_TLS = True,
         SITE_NAME = 'Qura Time',
         MAIL_USERNAME = 'alifed2005@gmail.com',
         MAIL_PASSWORD = 'geqmlpbrjotljids',
-        INSTAGRAM_PROFILE='https://google.com',
+        INSTAGRAM_PROFILE='qura.time',
         MAINTENANCE=False,
     )
 
     if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
+        app.config.from_pyfile('D:\Coding\JHS-Lecture-Portal\instance\config.py', silent=True)
     else:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
         app.config.from_mapping(test_config)
 
+    try:
+        os.makedirs(os.path.join(os.environ.get('DATA_FOLDER'), 'pdfs'))
+    except OSError:
+        pass
+
+    try:
+        os.makedirs(os.path.join(os.environ.get('DATA_FOLDER'), 'audios'))
+    except OSError:
+        pass
 
     # Initialisations
     db.init_app(app)
@@ -53,14 +60,15 @@ def create_app(test_config=None):
     @app.context_processor
     def define():
         return {'now': datetime.utcnow(),
-                'site_name': app.config['SITE_NAME'],}
+                'site_name': app.config['SITE_NAME'],
+                'current_app': app,}
 
     @login_required
     @app.route('/data/<path:file>')
     def data(file):
         if current_user.is_authenticated:
             if current_user.approved and current_user.verified:
-                return send_from_directory(app.config['DATA_FOLDER'], file)
+                return send_from_directory(os.environ.get('DATA_FOLDER'), file)
         return abort(403)
 
     @app.before_request
@@ -81,5 +89,5 @@ def create_app(test_config=None):
 
     from .database import User, Class, Subject, Lecture, Resource
     from .administration import UserView, SubjectView, ClassView, LectureView, ResourceView, FileView
-    admin.add_views(UserView(User, db.session), SubjectView(Subject, db.session), ClassView(Class, db.session), LectureView(Lecture, db.session), ResourceView(Resource, db.session), FileView(data_path, name='Data'))
+    admin.add_views(UserView(User, db.session), SubjectView(Subject, db.session), ClassView(Class, db.session), LectureView(Lecture, db.session), ResourceView(Resource, db.session), FileView(os.environ.get('DATA_FOLDER'), name='Data'))
     return app

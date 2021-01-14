@@ -6,17 +6,17 @@ from flask_admin.contrib.fileadmin import FileAdmin
 from .database import Class
 from .utils import filename_generator
 from jinja2 import Markup
-from flask import url_for, current_app
+from flask import url_for
 from sqlalchemy import and_
 from .database import User
 from flask_login import current_user
 from flask import redirect, request, url_for, flash
-data_path=os.path.join(os.path.dirname(os.path.abspath(__file__)),'data')
+data_path=os.environ.get('DATA_FOLDER')
 
 class Authentication(ModelView):
     def is_accessible(self):
         
-        if current_user.is_authenticated and (current_user.role=='ADMIN' or current_user.role=='MODERATOR') and current_user.verified:
+        if current_user.is_authenticated and current_user.role=='ADMIN' and current_user.verified and current_user.approved:
             return True
 
     def inaccessible_callback(self, name, **kwargs):
@@ -27,7 +27,7 @@ class Authentication(ModelView):
 class HomeView(AdminIndexView):
     def is_accessible(self):
         
-        if current_user.is_authenticated and (current_user.role=='ADMIN' or current_user.role=='MODERATOR' or current_user.role=='EDITOR') and current_user.verified:
+        if current_user.is_authenticated and (current_user.role=='ADMIN' or current_user.role=='EDITOR') and current_user.verified and current_user.approved:
             return True
 
     def inaccessible_callback(self, name, **kwargs):
@@ -50,13 +50,13 @@ class UserView(Authentication):
         'role':[
             ('ADMIN', 'Administrator'),
             ('EDITOR', 'Editor'),
-            ('MODERATOR', 'Moderator'),
+            # ('MODERATOR', 'Moderator'),
             ('STUDENT', 'Student')
         ]
     }
     form_excluded_columns=['username', 'password', 'verified']
     form_rules=[
-        rules.FieldSet(('name', 'email', 'role', 'clas', 'approved', 'verified'), 'Add User'),
+        rules.FieldSet(('name', 'email', 'role', 'clas', 'approved'), 'Add User'),
     ]
 
 
@@ -72,9 +72,9 @@ class SubjectView(Authentication):
         if not getattr(model, name):
             return ''
 
-        folder=name.replace('_','-')+'s/'
+        folder='images/'+name.replace('_','-')+'s/'
 
-        return Markup('<img src="%s" width="50">'% url_for('data', file=folder+form.thumbgen_filename(getattr(model, name))))
+        return Markup('<img src="%s" width="50">'% url_for('static', filename=folder+form.thumbgen_filename(getattr(model, name))))
 
     column_formatters = {
         'cover_pic': _list_thumbnail,
@@ -86,8 +86,8 @@ class SubjectView(Authentication):
         rules.FieldSet(('order', 'name', 'description', 'teacher_name', 'cover_pic', 'teacher_pic', 'clases'), 'Add Subject'),
     ]
     form_extra_fields = {
-        'teacher_pic': ImageUploadField('Teacher Pic', base_path=os.path.join(data_path, 'teacher-pics'), namegen=filename_generator, thumbnail_size=(200, 200, True), max_size=(512, 512, True), url_relative_path='/data/teacher-pics/'),
-        'cover_pic': ImageUploadField('Cover Pic', base_path=os.path.join(data_path, 'cover-pics'), namegen=filename_generator, thumbnail_size=(200, 133, True), max_size=(516, 344, True), url_relative_path='data/cover-pics/'),
+        'teacher_pic': ImageUploadField('Teacher Pic', base_path=os.path.join(data_path, 'teacher-pics'), namegen=filename_generator, thumbnail_size=(200, 200, True), max_size=(512, 512, True), url_relative_path='files/teacher-pics/'),
+        'cover_pic': ImageUploadField('Cover Pic', base_path=os.path.join(data_path, 'cover-pics'), namegen=filename_generator, thumbnail_size=(200, 133, True), max_size=(516, 344, True), url_relative_path='files/cover-pics/'),
     }
     form_choices={
         'order':[(i,str(i)) for i in range(1, 11)]
@@ -115,7 +115,7 @@ class LectureView(ModelView):
 
     def is_accessible(self):
         
-        if current_user.is_authenticated and (current_user.role=='ADMIN' or current_user.role=='MODERATOR' or current_user.role=='EDITOR') and current_user.verified:
+        if current_user.is_authenticated and (current_user.role=='ADMIN' or current_user.role=='EDITOR') and current_user.verified and current_user.approved:
             return True
 
     def inaccessible_callback(self, name, **kwargs):
@@ -143,7 +143,7 @@ class ResourceView(ModelView):
 
     def is_accessible(self):
         
-        if current_user.is_authenticated and (current_user.role=='ADMIN' or current_user.role=='MODERATOR' or current_user.role=='EDITOR') and current_user.verified:
+        if current_user.is_authenticated and (current_user.role=='ADMIN' or current_user.role=='EDITOR') and current_user.verified:
             return True
 
     def inaccessible_callback(self, name, **kwargs):

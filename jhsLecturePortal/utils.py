@@ -56,13 +56,16 @@ def send_reset_email(user):
     msg = Message('Password Reset',
                   sender=(current_app.config['SITE_NAME'], current_app.config["MAIL_USERNAME"]),
                   recipients=[user.email])
-    msg.body = f'''To reset your password, visit the following link: {url_for('auth.reset_token', token=token, _external=True)}\nIf you did not make this request then simply ignore this email and no changes will be made. '''
+    msg.body = f'''Hi {user.name}! Welcome to Qura Time\n\tTo reset your password, visit the following link: {url_for('auth.reset_token', token=token, _external=True)}\nIf you did not make this request then simply ignore this email and no changes will be made.\n\nNote: This is auto generated email.'''
     mail.send(msg)
 
-def send_verification_email(user):
+def send_verification_email(user, first_time=True):
     token = user.get_token()
     msg = Message('Email Verification',
                   sender=(current_app.config['SITE_NAME'], current_app.config["MAIL_USERNAME"]),
                   recipients=[user.email])
-    msg.body = f'''Hi {user.name}! Welcome to Qura Time\n\tTo verify your email, visit the following link: {url_for('auth.verify_email', token=token, _external=True)}\n\tYour Approval request is being reviewed and so you will be approved very soon.\n\nNote: This is auto generated email.'''
+    if first_time:
+        msg.body = f'''Hi {user.name}! Welcome to Qura Time\n\tTo verify your email, visit the following link: {url_for('auth.verify_email', token=token, _external=True)}\n\tYour Approval request is being reviewed and so you will be approved very soon.\n\nNote: This is auto generated email.'''
+    else:
+        msg.body = f'''Hi {user.name}!\n\tTo verify your email, visit the following link: {url_for('auth.verify_email', token=token, _external=True)}\n\nNote: This is auto generated email.'''
     mail.send(msg)

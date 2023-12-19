@@ -28,7 +28,7 @@ def create_app(test_config=None):
         MAIL_USE_TLS = True,
         SITE_NAME = 'Qura Time',
         MAIL_USERNAME = 'alifed2005@gmail.com',
-        MAIL_PASSWORD = 'geqmlpbrjotljids',
+        MAIL_PASSWORD = '<KEY_FOR_EMAIL>',
         INSTAGRAM_PROFILE='qura.time',
         MAINTENANCE=False,
     )
